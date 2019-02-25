@@ -2,16 +2,17 @@
  * Project 4 - OOP Game App
  * app.js */
 
-let game = new Game(0);
+let game = new Game();
 
 //Start Game
 $("#btn__reset").on("click", function(e)
 {
   game.startGame();
+
 });//event listener ends
 
 //Key click handler
-$('.keyrow').on('click', '.key', (e) =>
+$('.key').on("click", function(e)
 {
   game.handleInteraction(e);
 });//event listener ends

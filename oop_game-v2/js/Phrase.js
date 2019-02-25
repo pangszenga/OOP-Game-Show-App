@@ -36,63 +36,36 @@
 
     };//addPhraseToDisplay() ends
 
-    checkLetter(input)
+    checkLetter(selectedLetter)
     {
-      let arr = [...this.phrase];
-
-      for(let i = 0; i < arr.length; i ++)
+      $('#phrase ul li').each(function(index, value)
       {
-        if (arr[i] == input)
+        let $value = $(value).text();
+
+        if ($value === selectedLetter)
         {
-          console.log("true");
+          return true;
         }
         else
         {
-          console.log(input);
-        };//conditional statement ends
+          return false;
+        }//conditinal statement ends
+       });//each loop ends
 
-      };//for loop ends
+    };//checkLetter() ends should return a boolean
 
-    };//checkLetter() ends
-
-
+    showMatchedLetter(selectedLetter)
+    {
+     $('#phrase ul li').each(function()
+     {
+       if ($(this).text() === selectedLetter)
+       {
+         $(this).removeClass();
+         $(this).addClass('show');
+       }//conditinal statement ends
+      });//each loop ends
+    }//end of showMatchedLetter()
 
 
 
    };//class end
-
-   // checkLetter(input)
-   // {
-   //   for(let i = 0; i < this.phrase.length; i ++)
-   //   {
-   //     if (this.phrase[i] == input)
-   //     {
-   //       return true;
-   //     }
-   //     else
-   //     {
-   //       return false;
-   //     };//conditional statement ends
-   //
-   //   };//for loop ends
-   //
-   // };//checkLetter() ends
-
-   // showMatchedLetter(input)
-   // {
-   //   for(let i = 0; i < this.phrase.length; i ++)
-   //   {
-   //     if(input === this.phrase[i])
-   //     {
-   //       //life remains same
-   //       //append correct letter
-   //
-   //     }
-   //     else
-   //     {
-   //       //lose a life
-   //     };//conditional statement ends
-   //
-   //   };//for loop ends
-   //
-   // }//end of showMatchedLetter()

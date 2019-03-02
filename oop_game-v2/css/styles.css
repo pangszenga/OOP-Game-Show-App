@@ -228,3 +228,7 @@ img[src*="lostHeart.png"] {
 .lose a {
   color: var(--color-lose);
 }
+
+#scoreboard {
+  z-index: -1;
+}

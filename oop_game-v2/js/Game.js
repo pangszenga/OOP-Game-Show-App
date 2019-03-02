@@ -82,10 +82,8 @@
 
    reset()
    {
-     $("#scoreboard").hide();
      $("#btn__reset").on("click", () =>
      {
-       $("#scoreboard").show();
        this.missed = 0;
        $('#phrase ul li').remove();
        $('#overlay').removeClass().addClass('start');

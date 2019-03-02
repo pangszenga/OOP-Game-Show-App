@@ -82,8 +82,10 @@
 
    reset()
    {
-     $('#btn__reset').on('click', () =>
+     $("#scoreboard").hide();
+     $("#btn__reset").on("click", () =>
      {
+       $("#scoreboard").show();
        this.missed = 0;
        $('#phrase ul li').remove();
        $('#overlay').removeClass().addClass('start');
@@ -94,91 +96,51 @@
 
    }//reset() ends
 
-   handleInteraction(letterBtn)
+   handleInteraction(letter)
    {
-     //phrase.CheckLetter()  BOOLEAN
-     //phrase.showMatchedLetter() APPENDING to DOM
-     //game.checkForWin() BOOLEAN, removeLife() CHANGING DOM & gameOver() CHANGING DOM
-
-     //set up variables to use in the above methods (WHAT IS SELECTED)
-     let selectedLetter = letterBtn.target;
-     let letterClicked = selectedLetter.textContent;
-     let letterTarget = this.activePhrase.checkLetter(letterClicked);
-
-     //make sure clicked letter is disabled irregardless of the result
-     $(selectedLetter).attr("disabled", true);
-     $(selectedLetter).addClass("chosen");
-
-     if (letterTarget === false)
+     if (letter.tagName === "BUTTON")
      {
-       //incorrect
-       console.log("incorrect");
-       this.removeLife();
+       //checkForWin and removeLife
+       let letterSelected = letter.textContent;
+       let checkLetter = this.activePhrase.checkLetter(letterSelected);
 
-       //check if gameover
-       if (this.missed === 5)
+       console.log(letter);
+       letter.setAttribute("disabled", true);
+       letter.className = "chosen";
+
+       if (checkLetter === false)
        {
-         this.gameOver(true);
-         this.reset();
+         //incorrect
+         console.log("incorrect");
+         this.removeLife();
+
+         //check if gameover
+         if (this.missed === 5)
+         {
+           this.gameOver(true);
+           this.reset();
+         }//conditional statement ends
+       }
+       else
+       {
+         //correct
+         console.log("correct");
+         this.activePhrase.showMatchedLetter(letterSelected);
+
+         this.checkForWin();
+
+         if (this.checkForWin() === true)
+         {
+           this.gameOver(false);
+           this.reset();
+         }//conditional statement ends
+
        }//conditional statement ends
+
      }
-     else
-     {
-       //correct
-       console.log("correct");
-       this.activePhrase.showMatchedLetter(letterClicked);
 
-       this.checkForWin();
-       console.log(this.checkForWin());
-
-       if (this.checkForWin() === true)
-       {
-         this.gameOver(false);
-         this.reset();
-       }//conditional statement ends
-
-     }//conditional statement ends
-
-   }//handleInteraction() ends
+   };//handleInteraction();
 
 
-   keyHandler(selectedLetter)
-   {
-     let letterClicked = selectedLetter.key;
-     let letterTarget = this.activePhrase.checkLetter(letterClicked);
 
-     //make sure clicked letter is disabled irregardless of the result ___ DUDE START HERE
-     $(selectedLetter).attr("disabled", true);
-     $(selectedLetter).addClass("chosen");
-
-     if (letterTarget === false)
-     {
-       //incorrect
-       console.log("incorrect");
-       this.removeLife();
-
-       //check if gameover
-       if (this.missed === 5)
-       {
-         this.gameOver(true);
-         this.reset();
-       }//conditional statement ends
-     }
-     else
-     {
-       //correct
-       console.log("correct");
-       this.activePhrase.showMatchedLetter(letterClicked);
-
-       this.checkForWin();
-       console.log(this.checkForWin());
-
-       if (this.checkForWin() === true)
-       {
-         this.gameOver(false);
-         this.reset();
-       }//conditional statement ends
-
-     }//conditional statement ends
-   }
- }
+ }//Game class ends

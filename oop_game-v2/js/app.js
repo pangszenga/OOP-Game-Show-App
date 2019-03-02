@@ -17,11 +17,24 @@ $("#btn__reset").on("click", function(e)
 //Key click handler
 $('.keyrow').on("click", ".key", function(e)
 {
-  game.handleInteraction(e);
+  game.handleInteraction(e.target);
 });//event listener ends
 
 //Keyboard handleInteraction
-$(document).on('keyup', function(e)
+$(document).on('keypress', function(e)
 {
-  game.keyHandler(e);
-});
+  for(let i = 0; i < $(".key").length; i++)
+  {
+    if(e.key === $(".key")[i].textContent)
+    {
+      if($(".key")[i].classList.contains('wrong'))
+      {
+        e.preventDefault();
+      }
+      else
+      {
+        game.handleInteraction($(".key")[i]);
+      }
+    };//conditional statement ends
+  };//for loop ends
+});//event listener ends

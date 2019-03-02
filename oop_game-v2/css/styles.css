@@ -103,6 +103,7 @@ button {
   border-radius: 5px;
 }
 
+
 .space {
   width: 15px;
 }
@@ -147,8 +148,14 @@ button {
   font-size: 20px;
   cursor: pointer;
   border-bottom: solid 4px rgba(0, 0, 0, .3);
-  border-right: solid 3px rgba(0, 0, 0, .3)
+  border-right: solid 3px rgba(0, 0, 0, .3);
+  transition: all 0.2s ease-in-out;
 }
+
+#btn__reset:hover {
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 1);
+}
+
 
 .btn__reset:active {
   padding: 14px 16px 16px 14px;
@@ -156,7 +163,29 @@ button {
   border-right: solid 3px rgba(0, 0, 0, 0);
 }
 
+.key {
+  transition: all 0.2s ease-in-out;
+}
 
+.key:hover {
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 1);
+}
+
+img[src*="lostHeart.png"] {
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(2);
+  }
+  60%{
+    transform: scale(.5);
+  }
+  100% {
+    transform: scale(2);
+  }
+}
 /* Overlay */
 
 #overlay {

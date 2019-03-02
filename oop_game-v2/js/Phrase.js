@@ -38,20 +38,17 @@
 
     checkLetter(selectedLetter)
     {
-      $('#phrase ul li').each(function(index, value)
+      let target = false;
+      $('#phrase ul li').each((index, value) =>
       {
         let $value = $(value).text();
 
         if ($value === selectedLetter)
         {
-          return true;
+          target = true;
         }
-        else
-        {
-          return false;
-        }//conditinal statement ends
        });//each loop ends
-
+       return target;
     };//checkLetter() ends should return a boolean
 
     showMatchedLetter(selectedLetter)

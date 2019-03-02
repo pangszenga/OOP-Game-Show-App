@@ -38,36 +38,32 @@
    checkForWin()
    {
      //how many hidden letters remaining? (return BOOLEAN)
-     let letter = $(".hide .letter");
-     if (letter.length === 0)
+     let hiddenLetter = $("#phrase ul li[class*='letter']");
+     if (hiddenLetter.length === 0)
      {
-      return true;
-      //all letters found = WIN
+        return true;
      }
      else
      {
-      return false;
-      // some letters remain = keep playing
-    }//conditional statement ends
+        return false;
+     }//conditional statement ends
 
 
    }//checkForWin() ends
 
    removeLife()
    {
-     for(let i = 0; i < $(".tries").lenght ; i++)
-     {
-       //replace heart with lost heart image
-       $(".tries")[i].innerHTML = `<img src="images/lostHeart.png" alt="Heart Icon" height="35" width="30">`;
-       //set score with this.missed
-       this.missed += 1;
-     };//for loop ends
+     this.missed += 1;
+     let heart = $('.tries');
+
+     heart[this.missed -1].innerHTML = '<img src="images/lostHeart.png" alt="Heart Icon" height="35" width="30">';
+
    }//removeLife() ends
 
-   gameOver()
+   gameOver(gameOver)
    {
-     //if game is lost
-     if (this.missed === 5)
+     //game lost
+     if (gameOver)
      {
        $("#overlay").show();
        $("#overlay").removeClass("win");
@@ -76,43 +72,113 @@
      }
      else
      {
-       console.log("not yet");
-     }//conditional statement ends
-
-
-     //if game won
-     if(this.checkForWin() === true)
-     {
        $("#overlay").show();
        $("#overlay").removeClass("lose");
        $("#overlay").addClass("win");
        $("#game-over-message").text("You win, play again?");
-     }
-     else
-     {
-       console.log("not yet");
      }//conditional statement ends
 
    }//gameOver() ends
 
-   resetGame()
+   reset()
    {
-     conosle.log("do nothing YET");
-   }//resetGame() ends
+     $('#btn__reset').on('click', () =>
+     {
+       this.missed = 0;
+       $('#phrase ul li').remove();
+       $('#overlay').removeClass().addClass('start');
+       $('.keyrow button').removeClass().addClass('key').attr('disabled', false);
+       $('#scoreboard ol li img').attr('src', 'images/liveHeart.png');
+       this.startGame();
+     });//click handler ends
+
+   }//reset() ends
 
    handleInteraction(letterBtn)
    {
-     //WORKING IN PROGRESS
-     //match this up with the
      //phrase.CheckLetter()  BOOLEAN
-     //phrase.showMatchedLetter() APPENDING to DOM 
-     //game.checkForWin(), removeLife() & gameOver()
+     //phrase.showMatchedLetter() APPENDING to DOM
+     //game.checkForWin() BOOLEAN, removeLife() CHANGING DOM & gameOver() CHANGING DOM
 
      //set up variables to use in the above methods (WHAT IS SELECTED)
      let selectedLetter = letterBtn.target;
-     let
+     let letterClicked = selectedLetter.textContent;
+     let letterTarget = this.activePhrase.checkLetter(letterClicked);
 
+     //make sure clicked letter is disabled irregardless of the result
+     $(selectedLetter).attr("disabled", true);
+     $(selectedLetter).addClass("chosen");
 
+     if (letterTarget === false)
+     {
+       //incorrect
+       console.log("incorrect");
+       this.removeLife();
+
+       //check if gameover
+       if (this.missed === 5)
+       {
+         this.gameOver(true);
+         this.reset();
+       }//conditional statement ends
+     }
+     else
+     {
+       //correct
+       console.log("correct");
+       this.activePhrase.showMatchedLetter(letterClicked);
+
+       this.checkForWin();
+       console.log(this.checkForWin());
+
+       if (this.checkForWin() === true)
+       {
+         this.gameOver(false);
+         this.reset();
+       }//conditional statement ends
+
+     }//conditional statement ends
 
    }//handleInteraction() ends
+
+
+   keyHandler(selectedLetter)
+   {
+     let letterClicked = selectedLetter.key;
+     let letterTarget = this.activePhrase.checkLetter(letterClicked);
+
+     //make sure clicked letter is disabled irregardless of the result ___ DUDE START HERE
+     $(selectedLetter).attr("disabled", true);
+     $(selectedLetter).addClass("chosen");
+
+     if (letterTarget === false)
+     {
+       //incorrect
+       console.log("incorrect");
+       this.removeLife();
+
+       //check if gameover
+       if (this.missed === 5)
+       {
+         this.gameOver(true);
+         this.reset();
+       }//conditional statement ends
+     }
+     else
+     {
+       //correct
+       console.log("correct");
+       this.activePhrase.showMatchedLetter(letterClicked);
+
+       this.checkForWin();
+       console.log(this.checkForWin());
+
+       if (this.checkForWin() === true)
+       {
+         this.gameOver(false);
+         this.reset();
+       }//conditional statement ends
+
+     }//conditional statement ends
+   }
  }
